@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ActionDog {
+  // ignore: non_constant_identifier_names
   String collection_name = 'datadog';
+  // ignore: non_constant_identifier_names
   FirebaseFirestore firestore_db;
 
   ActionDog() {

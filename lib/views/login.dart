@@ -36,44 +36,83 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Login'),
       ),
       body: Column(
         children: [
-          TextField(
-            controller: emailController,
+          Column(
+            children: [
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(hintText: 'email'),
+              ),
+              TextField(
+                controller: passwordController,
+                decoration: InputDecoration(hintText: 'password'),
+              ),
+            ],
           ),
-          TextField(
-            controller: passwordController,
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: SizedBox(
+                      width: 90,
+                      height: 50,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.red),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => regisform(),
+                                ));
+                          },
+                          child: Text('Sign Up')),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: SizedBox(
+                      width: 90,
+                      height: 50,
+                      child: ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.green),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            final result = await Auth().signInWithEmail(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                            print('uid : $result');
+
+                            prefs
+                                .setString('uidToken', result)
+                                .whenComplete(() {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => usersdata(),
+                                  ));
+                            });
+                          },
+                          child: Text('Sign In')),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          ElevatedButton(
-              onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-
-                final result = await Auth().signInWithEmail(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
-                print('uid : $result');
-
-                prefs.setString('uidToken', result).whenComplete(() {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => usersdata(),
-                      ));
-                });
-              },
-              child: Text('Login')),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => regisform(),
-                    ));
-              },
-              child: Text('sign up'))
         ],
       ),
     );

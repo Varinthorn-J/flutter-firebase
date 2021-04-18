@@ -18,6 +18,7 @@ class _usersdataState extends State<usersdata> {
     super.initState();
   }
 
+  String message = '';
   double padding = 8;
   String usedata = "";
   TextEditingController namecontroller = TextEditingController();
@@ -28,71 +29,101 @@ class _usersdataState extends State<usersdata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Dog data'),
+        backgroundColor: Colors.black,
+        title: Text('Register Form'),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: namecontroller,
-              decoration: InputDecoration(hintText: 'name'),
-            ),
+          // Container(
+          //     color: Colors.blue,
+          //     width: MediaQuery.of(context).size.width / 2,
+          //     height: 20),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: namecontroller,
+                  decoration: InputDecoration(hintText: 'name'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: speciescontroller,
+                  decoration: InputDecoration(hintText: 'species'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: weightcontroller,
+                  decoration: InputDecoration(hintText: 'weight'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: agecontroller,
+                  decoration: InputDecoration(hintText: 'age'),
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: speciescontroller,
-              decoration: InputDecoration(hintText: 'species'),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.green),
+                  onPressed: () {
+                    final res = ActionDog().addNewDog({
+                      "name": namecontroller.text.trim(),
+                      "species": speciescontroller.text.trim(),
+                      "weight": weightcontroller.text.trim(),
+                      "age": agecontroller.text.trim(),
+                    });
+                    print(res);
+                  },
+                  child: Text('submit'),
+                ),
+              ),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => listdog(),
+                          ));
+                    },
+                    child: Text('list')),
+              ),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.blue),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ));
+                  },
+                  child: Text('back'),
+                ),
+              ),
+              Center(child: Text(usedata)),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: weightcontroller,
-              decoration: InputDecoration(hintText: 'weight'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: agecontroller,
-              decoration: InputDecoration(hintText: 'age'),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              final res = ActionDog().addNewDog({
-                "name": namecontroller.text.trim(),
-                "species": speciescontroller.text.trim(),
-                "weight": weightcontroller.text.trim(),
-                "age": agecontroller.text.trim(),
-              });
-              print(res);
-            },
-            child: Text('submit'),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => listdog(),
-                    ));
-              },
-              child: Text('list')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ));
-            },
-            child: Text('back'),
-          ),
-          Center(child: Text(usedata)),
         ],
       ),
     );

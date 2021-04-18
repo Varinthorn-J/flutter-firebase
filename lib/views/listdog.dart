@@ -30,31 +30,83 @@ class _listdogState extends State<listdog> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('data dog'),
+          backgroundColor: Colors.black,
+          title: Text('Dog Data'),
         ),
         body: ListView.builder(
           itemCount: dogs.length,
           itemBuilder: (context, index) {
-            return Container(
-              child: Column(
-                children: [
-                  Text('${dogs[index]['name']}'),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => usersdata(),
-                            ));
-                      },
-                      child: Text('back')),
-                  ElevatedButton(
-                      onPressed: () {
-                        ActionDog().deleteDog("datadog");
-                      },
-                      child: Text('delete')),
-                ],
-              ),
+            return Column(
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text('Name:  ${dogs[index]['name']}'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text('Species:  ${dogs[index]['species']}'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text('Weight:  ${dogs[index]['weight']}'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text('Age: ${dogs[index]['age']}'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            width: 80,
+                            height: 40,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.red),
+                                onPressed: () {
+                                  final res = ActionDog()
+                                      .deleteDog("${dogs[index]['name']}");
+                                  print(res);
+                                },
+                                child: Text('delete')),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            width: 80,
+                            height: 40,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => usersdata(),
+                                    ),
+                                  );
+                                },
+                                child: Text('back')),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         ));

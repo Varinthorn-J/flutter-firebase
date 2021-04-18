@@ -24,6 +24,7 @@ class _regisformState extends State<regisform> {
     return Scaffold(
       resizeToAvoidBottomInset: false, //แก้ขอบชน
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Register'),
       ),
       body: Column(
@@ -72,23 +73,31 @@ class _regisformState extends State<regisform> {
               decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  welcome =
-                      "${firstnamecontroller.text.trim()} ${lastnamecontroller.text.trim()}\n "
-                      "${addresscontroller.text.trim()}\n"
-                      "${phonecontroller.text.trim()}\n"
-                      "${emailcontroller.text.trim()}\n"
-                      "${passwordcontroller.text.trim()}\n"; //trim ตัดช่องว่าง
-                });
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Login(),
-                    ));
-              },
-              child: Text('test')),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: SizedBox(
+              width: 90,
+              height: 50,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.green),
+                  onPressed: () {
+                    setState(() {
+                      welcome =
+                          "${firstnamecontroller.text.trim()} ${lastnamecontroller.text.trim()}\n "
+                          "${addresscontroller.text.trim()}\n"
+                          "${phonecontroller.text.trim()}\n"
+                          "${emailcontroller.text.trim()}\n"
+                          "${passwordcontroller.text.trim()}\n"; //trim ตัดช่องว่าง
+                    });
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ));
+                  },
+                  child: Text('Submit')),
+            ),
+          ),
           Text(welcome),
         ],
       ),

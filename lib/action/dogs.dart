@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ActionDog {
-  String collection_name = 'DataDog';
+  String collection_name = 'datadog';
   FirebaseFirestore firestore_db;
 
   ActionDog() {
@@ -25,8 +25,8 @@ class ActionDog {
 
   updateDog() async {}
 
-  deleteDog(String docName) async {
+  deleteDog(String datadog) async {
     final collection = firestore_db.collection(collection_name);
-    collection.doc(docName).delete();
+    collection.doc(datadog).delete();
   }
 }

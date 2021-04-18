@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/views/login.dart';
 import 'package:flutter_firebase_connect/views/regisform.dart';
+import 'package:flutter_firebase_connect/views/usersdata.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class App extends StatelessWidget {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            return Login();
+            return usersdata();
           }
 
           // Otherwise, show something whilst waiting for initialization to complete

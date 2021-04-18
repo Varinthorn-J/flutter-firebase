@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_connect/action/dogs.dart';
+import 'package:flutter_firebase_connect/views/listdog.dart';
 
 import 'login.dart';
 
@@ -60,15 +62,26 @@ class _usersdataState extends State<usersdata> {
             ),
           ),
           ElevatedButton(
+            onPressed: () {
+              final res = ActionDog().addNewDog({
+                "name": namecontroller.text.trim(),
+                "species": speciescontroller.text.trim(),
+                "weight": weightcontroller.text.trim(),
+                "age": agecontroller.text.trim(),
+              });
+              print(res);
+            },
+            child: Text('submit'),
+          ),
+          ElevatedButton(
               onPressed: () {
-                setState(() {
-                  usedata = "${namecontroller.text.trim()}\n"
-                      "${speciescontroller.text.trim()}\n"
-                      "${weightcontroller.text.trim()}\n"
-                      "${agecontroller.text.trim()}\n";
-                });
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => listdog(),
+                    ));
               },
-              child: Text('submit')),
+              child: Text('list')),
           ElevatedButton(
             onPressed: () {
               Navigator.pushReplacement(

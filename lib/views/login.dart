@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/action/auth.dart';
 import 'package:flutter_firebase_connect/views/home.dart';
+import 'package:flutter_firebase_connect/views/listdog.dart';
 import 'package:flutter_firebase_connect/views/regisform.dart';
 import 'package:flutter_firebase_connect/views/usersdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,9 +48,11 @@ class _LoginState extends State<Login> {
                 controller: emailController,
                 decoration: InputDecoration(hintText: 'email'),
               ),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(hintText: 'password'),
+              SizedBox(
+                child: TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(hintText: 'password'),
+                ),
               ),
             ],
           ),
@@ -102,7 +105,7 @@ class _LoginState extends State<Login> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => usersdata(),
+                                    builder: (context) => listdog(),
                                   ));
                             });
                           },

@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/action/dogs.dart';
-import 'package:flutter_firebase_connect/views/usersdata.dart';
+import 'package:flutter_firebase_connect/views/home.dart';
+import 'package:flutter_firebase_connect/views/regisform.dart';
 
 // ignore: camel_case_types
-class listdog extends StatefulWidget {
-  listdog({Key key}) : super(key: key);
+class profile extends StatefulWidget {
+  profile({Key key}) : super(key: key);
 
   @override
-  _listdogState createState() => _listdogState();
+  _profileState createState() => _profileState();
 }
 
 // ignore: camel_case_types
-class _listdogState extends State<listdog> {
-  List dogs = [];
+class _profileState extends State<profile> {
+  List profiles = [];
   @override
   void initState() {
     // ignore: todo
     // TODO: implement initState
-    ActionDog().getAllDog().then((result) {
+    ActionRegis().getAllRegis().then((result) {
       print(result);
       setState(() {
-        dogs = result;
+        profiles = result;
       });
     });
     super.initState();
@@ -30,13 +31,13 @@ class _listdogState extends State<listdog> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text('Dog Data'),
+          backgroundColor: Colors.blueGrey,
+          title: Text('profile'),
         ),
         body: Container(
           color: Colors.blueGrey,
           child: ListView.builder(
-            itemCount: dogs.length,
+            itemCount: profiles.length,
             itemBuilder: (context, index) {
               return Column(
                 children: [
@@ -50,21 +51,32 @@ class _listdogState extends State<listdog> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Text('Name:  ${dogs[index]['name']}'),
+                              child: Text(
+                                  'FirstName:  ${profiles[index]['FirstName']}'),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child:
-                                  Text('Species:  ${dogs[index]['species']}'),
+                              child: Text(
+                                  'LastName:  ${profiles[index]['LastName']}'),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Text('Weight:  ${dogs[index]['weight']}'),
+                              child: Text(
+                                  'Address:  ${profiles[index]['Address']}'),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Text('Age: ${dogs[index]['age']}'),
+                              child: Text('Tell: ${profiles[index]['Tell']}'),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text('Email: ${profiles[index]['Email']}'),
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(10),
+                            //   child: Text(
+                            //       'Password: ${profiles[index]['Password']}'),
+                            // ),
                           ],
                         ),
                       ),
@@ -85,8 +97,8 @@ class _listdogState extends State<listdog> {
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
                                   onPressed: () {
-                                    final res = ActionDog()
-                                        .deleteDog("${dogs[index]['name']}");
+                                    final res = ActionRegis().deleteRegis(
+                                        "${profiles[index]['FirstName']}");
 
                                     print(res);
                                     print('Delete Success');
@@ -104,11 +116,11 @@ class _listdogState extends State<listdog> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => usersdata(),
+                                        builder: (context) => Home(),
                                       ),
                                     );
                                   },
-                                  child: Text('insert')),
+                                  child: Text('Back')),
                             ),
                           ),
                         ],

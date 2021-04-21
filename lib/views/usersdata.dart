@@ -210,7 +210,7 @@ class _usersdataState extends State<usersdata> {
 
   Widget _list() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 0.0),
+      padding: EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
       child: SizedBox(
         width: 40,

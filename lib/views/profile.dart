@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/action/dogs.dart';
+import 'package:flutter_firebase_connect/action/registers.dart';
 import 'package:flutter_firebase_connect/views/home.dart';
 import 'package:flutter_firebase_connect/views/regisform.dart';
 
@@ -31,11 +32,23 @@ class _profileState extends State<profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Color(0xFF8BAFDB),
           title: Text('profile'),
         ),
         body: Container(
-          color: Colors.blueGrey,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF73AEF5),
+                Color(0xFF61A4F1),
+                Color(0xFF478DE0),
+                Color(0xFF398AE5),
+              ],
+              stops: [0.1, 0.4, 0.7, 0.9],
+            ),
+          ),
           child: ListView.builder(
             itemCount: profiles.length,
             itemBuilder: (context, index) {

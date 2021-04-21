@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/action/dogs.dart';
 import 'package:flutter_firebase_connect/views/usersdata.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_firebase_connect/views/login.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_firebase_connect/utilities/constants.dart';
 
 // ignore: camel_case_types
 class listdog extends StatefulWidget {
@@ -30,11 +34,23 @@ class _listdogState extends State<listdog> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text('Dog Data'),
+          backgroundColor: Color(0xFF8BAFDB),
+          title: Text('Animal Data'),
         ),
         body: Container(
-          color: Colors.blueGrey,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF73AEF5),
+                Color(0xFF61A4F1),
+                Color(0xFF478DE0),
+                Color(0xFF398AE5),
+              ],
+              stops: [0.1, 0.4, 0.7, 0.9],
+            ),
+          ),
           child: ListView.builder(
             itemCount: dogs.length,
             itemBuilder: (context, index) {
@@ -44,7 +60,7 @@ class _listdogState extends State<listdog> {
                     child: Padding(
                       padding: const EdgeInsets.all(14),
                       child: Container(
-                        color: Color.fromRGBO(255, 255, 255, 0.7),
+                        color: Colors.white,
                         width: 350,
                         child: Column(
                           children: [
@@ -72,43 +88,73 @@ class _listdogState extends State<listdog> {
                   ),
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.all(14),
+                      padding: EdgeInsets.symmetric(vertical: 0.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: SizedBox(
-                              width: 80,
-                              height: 40,
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.red),
-                                  onPressed: () {
-                                    final res = ActionDog()
-                                        .deleteDog("${dogs[index]['name']}");
+                              width: 100,
+                              height: 50,
+                              child: RaisedButton(
+                                elevation: 5.0,
+                                onPressed: () {
+                                  final res = ActionDog()
+                                      .deleteDog("${dogs[index]['name']}");
 
-                                    print(res);
-                                    print('Delete Success');
-                                  },
-                                  child: Text('delete')),
+                                  print(res);
+                                  print('Delete Success');
+                                },
+                                padding: EdgeInsets.all(15.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                color: Colors.white,
+                                child: Text(
+                                  'Delete',
+                                  style: TextStyle(
+                                    color: Color(0xFF527DAA),
+                                    letterSpacing: 1.5,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'OpenSans',
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: SizedBox(
-                              width: 80,
-                              height: 40,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => usersdata(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text('insert')),
+                              width: 100,
+                              height: 50,
+                              child: RaisedButton(
+                                elevation: 5.0,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => usersdata(),
+                                    ),
+                                  );
+                                },
+                                padding: EdgeInsets.all(15.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                color: Colors.white,
+                                child: Text(
+                                  'Insert',
+                                  style: TextStyle(
+                                    color: Color(0xFF527DAA),
+                                    letterSpacing: 1.5,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'OpenSans',
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],

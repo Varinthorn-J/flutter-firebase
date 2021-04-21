@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/action/auth.dart';
 import 'package:flutter_firebase_connect/views/home.dart';
-import 'package:flutter_firebase_connect/views/listdog.dart';
 import 'package:flutter_firebase_connect/views/regisform.dart';
 import 'package:flutter_firebase_connect/views/usersdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_firebase_connect/utilities/constants.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -25,6 +26,158 @@ class _LoginState extends State<Login> {
     }
   }
 
+  Widget _buildEmailTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Email',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            controller: emailController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Email',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Password',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            controller: passwordController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Password',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoginBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: SizedBox(
+        height: 55,
+        child: RaisedButton(
+          elevation: 5.0,
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+
+            final result = await Auth().signInWithEmail(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+            );
+            print('uid : $result');
+
+            prefs.setString('uidToken', result).whenComplete(() {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => usersdata(),
+                  ));
+            });
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.white,
+          child: Text(
+            'LOGIN',
+            style: TextStyle(
+              color: Color(0xFF527DAA),
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildregister() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 0.0),
+      width: double.infinity,
+      child: SizedBox(
+        height: 55,
+        child: RaisedButton(
+          elevation: 5.0,
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => regisform(),
+                ));
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.white,
+          child: Text(
+            'REGISTER',
+            style: TextStyle(
+              color: Color(0xFF527DAA),
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     checkLogin();
@@ -36,87 +189,64 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Login'),
-      ),
-      body: Column(
-        children: [
-          Column(
-            children: [
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(hintText: 'email'),
-              ),
-              SizedBox(
-                child: TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(hintText: 'password'),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF73AEF5),
+                      Color(0xFF61A4F1),
+                      Color(0xFF478DE0),
+                      Color(0xFF398AE5),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
                 ),
               ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 120.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Sign In',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
+                      _buildEmailTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildPasswordTF(),
+                      _buildLoginBtn(),
+                      _buildregister(),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Center(
-                    child: SizedBox(
-                      width: 90,
-                      height: 50,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.red),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => regisform(),
-                                ));
-                          },
-                          child: Text('Sign Up')),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Center(
-                    child: SizedBox(
-                      width: 90,
-                      height: 50,
-                      child: ElevatedButton(
-                          style:
-                              ElevatedButton.styleFrom(primary: Colors.green),
-                          onPressed: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-
-                            final result = await Auth().signInWithEmail(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            );
-                            print('uid : $result');
-
-                            prefs
-                                .setString('uidToken', result)
-                                .whenComplete(() {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => listdog(),
-                                  ));
-                            });
-                          },
-                          child: Text('Sign In')),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

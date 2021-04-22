@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_connect/views/login.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_firebase_connect/utilities/constants.dart';
+
+import '../action/registers.dart';
+
 // ignore: camel_case_types
 class regisform extends StatefulWidget {
   regisform({Key key}) : super(key: key);
@@ -12,7 +15,6 @@ class regisform extends StatefulWidget {
 
 // ignore: camel_case_types
 class _regisformState extends State<regisform> {
-
   void initState() {
     super.initState();
   }
@@ -26,10 +28,7 @@ class _regisformState extends State<regisform> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
 
-
-
   Widget _buildfname() {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -49,12 +48,11 @@ class _regisformState extends State<regisform> {
               fontFamily: 'OpenSans',
             ),
             controller: firstnamecontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.insert_emoticon_sharp,
                 color: Colors.white,
               ),
               hintText: 'Enter your Fristname',
@@ -86,12 +84,11 @@ class _regisformState extends State<regisform> {
               fontFamily: 'OpenSans',
             ),
             controller: lastnamecontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.insert_emoticon_outlined,
                 color: Colors.white,
               ),
               hintText: 'Enter your Lastname',
@@ -121,17 +118,13 @@ class _regisformState extends State<regisform> {
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
-
             ),
-
             controller: addresscontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
-
               prefixIcon: Icon(
-                Icons.email,
+                Icons.home_work_outlined,
                 color: Colors.white,
               ),
               hintText: 'Enter your Address',
@@ -142,6 +135,7 @@ class _regisformState extends State<regisform> {
       ],
     );
   }
+
   Widget _buildphone() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,12 +156,11 @@ class _regisformState extends State<regisform> {
               fontFamily: 'OpenSans',
             ),
             controller: phonecontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.perm_phone_msg_outlined,
                 color: Colors.white,
               ),
               hintText: 'Enter your Phone ',
@@ -178,6 +171,7 @@ class _regisformState extends State<regisform> {
       ],
     );
   }
+
   Widget _buildemail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,7 +192,6 @@ class _regisformState extends State<regisform> {
               fontFamily: 'OpenSans',
             ),
             controller: emailcontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
@@ -214,6 +207,7 @@ class _regisformState extends State<regisform> {
       ],
     );
   }
+
   Widget _buildpassword() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,12 +228,11 @@ class _regisformState extends State<regisform> {
               fontFamily: 'OpenSans',
             ),
             controller: passwordcontroller,
-
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.lock_outline_rounded,
                 color: Colors.white,
               ),
               hintText: 'Enter your Password ',
@@ -249,16 +242,26 @@ class _regisformState extends State<regisform> {
         ),
       ],
     );
-  }Widget _buildLoginBtn() {
+  }
+
+  Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
+          ActionRegis().addNewRegis({
+            "FirstName": firstnamecontroller.text.trim(),
+            "LastName": lastnamecontroller.text.trim(),
+            "Address": phonecontroller.text.trim(),
+            "Email": emailcontroller.text.trim(),
+            "Password": passwordcontroller.text.trim(),
+          });
+
           setState(() {
             welcome =
-            "${firstnamecontroller.text.trim()} ${lastnamecontroller.text.trim()}\n "
+                "${firstnamecontroller.text.trim()} ${lastnamecontroller.text.trim()}\n "
                 "${addresscontroller.text.trim()}\n"
                 "${phonecontroller.text.trim()}\n"
                 "${emailcontroller.text.trim()}\n"
@@ -288,6 +291,7 @@ class _regisformState extends State<regisform> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,7 +312,6 @@ class _regisformState extends State<regisform> {
                       Color(0xFFDFE8F3),
                       Color(0xFFC8DAE3),
                       Color(0xFF9CACB6),
-
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -325,7 +328,6 @@ class _regisformState extends State<regisform> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-
                       Text(
                         'Register',
                         style: TextStyle(
@@ -335,21 +337,15 @@ class _regisformState extends State<regisform> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
-
-                      SizedBox
-                        (height: 30.0),
+                      SizedBox(height: 30.0),
                       _buildfname(),
                       _buildlname(),
                       _buildaddress(),
                       _buildphone(),
                       _buildemail(),
                       _buildpassword(),
-                      SizedBox(
-                        height: 30.0),
+                      SizedBox(height: 30.0),
                       _buildLoginBtn(),
-
-
                     ],
                   ),
                 ),
@@ -361,4 +357,3 @@ class _regisformState extends State<regisform> {
     );
   }
 }
-
